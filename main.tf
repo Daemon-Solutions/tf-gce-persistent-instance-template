@@ -32,6 +32,9 @@ resource "google_compute_instance_template" "instance_template-net" {
 
   network_interface {
     network = "${var.net_name}"
+    access_config {
+      # Ephemeral
+    }
   }
 
   metadata {
@@ -80,6 +83,9 @@ resource "google_compute_instance_template" "instance_template-subnets" {
 
   network_interface {
     subnetwork = "${var.net_name}"
+    access_config {
+      # Ephemeral
+    }
   }
 
   metadata {
