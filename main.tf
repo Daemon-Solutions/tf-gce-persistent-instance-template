@@ -1,4 +1,9 @@
 # Instance template for managed instance groups - SINGLE NETWORK
+
+resource "google_compute_address" "jenkins_address" {
+  name = "jenkins_public_address"
+}
+
 resource "google_compute_instance_template" "instance_template-net" {
   count = "${var.network_enabled}"
 
@@ -33,7 +38,7 @@ resource "google_compute_instance_template" "instance_template-net" {
   network_interface {
     network = "${var.net_name}"
     access_config {
-      # Ephemeral
+      nat_ip = "${google_compute_address.jenkins_address.address}"
     }
   }
 
@@ -84,7 +89,7 @@ resource "google_compute_instance_template" "instance_template-subnets" {
   network_interface {
     subnetwork = "${var.net_name}"
     access_config {
-      # Ephemeral
+      nat_ip = "${google_compute_address.jenkins_address.address}"
     }
   }
 
