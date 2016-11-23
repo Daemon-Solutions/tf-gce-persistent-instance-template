@@ -1,5 +1,4 @@
 # Instance template for managed instance groups - SINGLE NETWORK
-
 resource "google_compute_address" "public_address" {
   name = "${var.service}address"
 }
@@ -50,7 +49,7 @@ resource "google_compute_instance_template" "instance_template-net" {
   }
 
   service_account {
-    scopes = ["${split(",", var.scopes)}"]
+    scopes = ["${var.scopes}"]
   }
 }
 
@@ -101,6 +100,6 @@ resource "google_compute_instance_template" "instance_template-subnets" {
   }
 
   service_account {
-    scopes = ["${split(",", var.scopes)}"]
+    scopes = ["${var.scopes}"]
   }
 }
