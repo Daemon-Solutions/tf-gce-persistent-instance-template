@@ -1,10 +1,11 @@
 # Instance template for managed instance groups - SINGLE NETWORK
 resource "google_compute_address" "public_address" {
-  name = "${var.service}address"
+  count = "${var.public_ip}"
+  name  = "${var.service}address"
 }
 
-resource "google_compute_instance_template" "instance_template-net" {
-  count = "${var.network_enabled}"
+resource "google_compute_instance_template" "instance_template-public" {
+  count = "${var.public_ip}"
 
   lifecycle {
     create_before_destroy = true
@@ -54,8 +55,8 @@ resource "google_compute_instance_template" "instance_template-net" {
 }
 
 # Instance template for managed instance groups - SUBNETS ENABLED
-resource "google_compute_instance_template" "instance_template-subnets" {
-  count = "${var.subnets_enabled}"
+resource "google_compute_instance_template" "instance_template-private" {
+  count = "${var.private_ip}"
 
   lifecycle {
     create_before_destroy = true
@@ -87,9 +88,6 @@ resource "google_compute_instance_template" "instance_template-subnets" {
 
   network_interface {
     subnetwork = "${var.net_name}"
-    access_config {
-      nat_ip = "${google_compute_address.public_address.address}"
-    }
   }
 
   metadata {

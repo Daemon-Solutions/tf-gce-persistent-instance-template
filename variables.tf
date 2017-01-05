@@ -9,8 +9,8 @@ variable "startup_script" {}
 variable "shortzone" {}
 variable gcp_region {}
 variable needs_nat {}
-variable subnets_enabled {}
-variable network_enabled {}
+variable public_ip {}
+variable private_ip {}
 
 variable "fw_tags" {
   type = "list"
